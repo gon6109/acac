@@ -4,9 +4,16 @@ import argparse
 import subprocess
 import shutil
 import glob
+import re
 
 def FormatContent(content):
     res = content.replace('/images/acac2019', 'images/acac2019')
+    res = re.sub(r"([^!])\[(.*)\]\((.*)\)", r"\1\2(\3)", res, flags=re.MULTILINE)
+    res = re.sub(r"^#", r"##", res, flags=re.MULTILINE)
+    res = re.sub(r"^\+\+\+.*title\s*=\s*\"(.*?)\".*authors\s*=\s\[\"(.*?)\"\].*\+\+\+",
+     r"# \1" + "\n" + r"###### \2", res, flags=re.DOTALL)
+    res += "\n"
+    res += "\n"
     return res
 
 parser = argparse.ArgumentParser(description='Set up ACAC icml')
