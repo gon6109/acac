@@ -31,7 +31,7 @@ image = args.image
 if os.path.exists(os.path.dirname(__file__) + "/" + tmp):
     shutil.rmtree(os.path.dirname(__file__) + "/" + tmp)
 
-shutil.copytree(md, os.path.dirname(__file__) + "/" + tmp)
-shutil.copytree(image, os.path.dirname(__file__) + "/" + tmp + "/image")
+shutil.copytree(md, os.path.dirname(__file__) + "/" + tmp + "/md")
+shutil.copytree(image, os.path.dirname(__file__) + "/" + tmp + "/images")
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
