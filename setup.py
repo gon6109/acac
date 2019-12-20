@@ -10,6 +10,7 @@ def FormatContent(content):
     res = content.replace('/images/acac2019', 'images/acac2019')
     res = re.sub(r"([^!])\[(.*)\]\((.*)\)", r"\1\2(\3)", res, flags=re.MULTILINE)
     res = re.sub(r"^#", r"##", res, flags=re.MULTILINE)
+    res = re.sub(r"  " + "\n" + r"(?!\[\^\d+\])", r"", res, flags=re.MULTILINE|re.DOTALL)
     res = re.sub(r"^\+\+\+.*title\s*=\s*\"(.*?)\".*authors\s*=\s\[\"(.*?)\"\].*\+\+\+",
      r"# \1" + "\n" + r"###### \2", res, flags=re.DOTALL)
     res += "\n"
@@ -51,6 +52,8 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 formated = ""
 for path in glob.glob(tmp + "/*.md"):
+    if path.count("_index") > 0:
+        continue
     with open(path, encoding="utf8") as f:
         content = f.read()
     formated += FormatContent(content)
